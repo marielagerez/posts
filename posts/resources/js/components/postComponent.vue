@@ -12,14 +12,11 @@
                     <input v-model="title" type="text" class="form-control">
 
                     <label>Contenido</label>
-                    <input v-model="content" type="text" class="form-control">
+                    <textarea v-model="content" type="text" class="form-control"></textarea>
                 </div>
                 <div class="container-buttons">
-                    <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
                     <button v-if="update == 0" @click="savePosts()" class="btn btn-success">Añadir</button>
-                    <!-- Botón que modifica la tarea que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
                     <button v-if="update != 0" @click="updatePosts()" class="btn btn-warning">Actualizar</button>
-                    <!-- Botón que limpia el formulario y inicializa la variable a 0, solo se muestra si la variable update es diferente a 0-->
                     <button v-if="update != 0" @click="clearFields()" class="btn">Atrás</button>
                 </div>
             </div>
@@ -36,8 +33,8 @@
                         </thead>
                         <tbody>
                             <tr v-for="post in arrayPosts" :key="post.id"> 
-                                <td v-text="post.name"></td>
-                                <td v-text="post.description"></td>
+                                <td v-text="post.author"></td>
+                                <td v-text="post.title"></td>
                                 <td v-text="post.content"></td>
                                 <td>
                                     <button class="btn" @click="loadFieldsUpdate(post)">Modificar</button>
@@ -78,23 +75,23 @@
             savePosts(){
                 let me =this;
                 let url = '/posts/guardar' //Ruta que hemos creado para enviar una tarea y guardarla
-                axios.post(url,{ //estas variables son las que enviaremos para que crear la tarea
+                axios.post(url,{ 
                     'author':this.author,
                     'title':this.title,
                     'content':this.content,
                 }).then(function (response) {
-                    me.getPosts();//llamamos al metodo getTask(); para que refresque nuestro array y muestro los nuevos datos
-                    me.clearFields();//Limpiamos los campos e inicializamos la variable update a 0
+                    me.getPosts();
+                    me.clearFields();
                 })
                 .catch(function (error) {
                     console.log(error);
                 });   
                 
             },
-            updateTasks(){/*Esta funcion, es igual que la anterior, solo que tambien envia la variable update que contiene el id de la
+            updatePosts(){/*Esta funcion, es igual que la anterior, solo que tambien envia la variable update que contiene el id de la
                 tarea que queremos modificar*/
                 let me = this;
-                axios.put('/tareas/actualizar',{
+                axios.put('/posts/actualizar',{
                     'id':this.update,
                     'author':this.author,
                     'title':this.title,

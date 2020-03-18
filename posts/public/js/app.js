@@ -1828,8 +1828,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1858,23 +1856,21 @@ __webpack_require__.r(__webpack_exports__);
       var url = '/posts/guardar'; //Ruta que hemos creado para enviar una tarea y guardarla
 
       axios.post(url, {
-        //estas variables son las que enviaremos para que crear la tarea
         'author': this.author,
         'title': this.title,
         'content': this.content
       }).then(function (response) {
-        me.getPosts(); //llamamos al metodo getTask(); para que refresque nuestro array y muestro los nuevos datos
-
-        me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
+        me.getPosts();
+        me.clearFields();
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    updateTasks: function updateTasks() {
+    updatePosts: function updatePosts() {
       /*Esta funcion, es igual que la anterior, solo que tambien envia la variable update que contiene el id de la
       tarea que queremos modificar*/
       var me = this;
-      axios.put('/tareas/actualizar', {
+      axios.put('/posts/actualizar', {
         'id': this.update,
         'author': this.author,
         'title': this.title,
@@ -37432,7 +37428,7 @@ var render = function() {
           _vm._v(" "),
           _c("label", [_vm._v("Contenido")]),
           _vm._v(" "),
-          _c("input", {
+          _c("textarea", {
             directives: [
               {
                 name: "model",
@@ -37501,54 +37497,54 @@ var render = function() {
               )
             : _vm._e()
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-6" }, [
-      _c("table", { staticClass: "table text-center" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.arrayPosts, function(post) {
-            return _c("tr", { key: post.id }, [
-              _c("td", { domProps: { textContent: _vm._s(post.name) } }),
-              _vm._v(" "),
-              _c("td", { domProps: { textContent: _vm._s(post.description) } }),
-              _vm._v(" "),
-              _c("td", { domProps: { textContent: _vm._s(post.content) } }),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn",
-                    on: {
-                      click: function($event) {
-                        return _vm.loadFieldsUpdate(post)
-                      }
-                    }
-                  },
-                  [_vm._v("Modificar")]
-                ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("table", { staticClass: "table text-center" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.arrayPosts, function(post) {
+              return _c("tr", { key: post.id }, [
+                _c("td", { domProps: { textContent: _vm._s(post.author) } }),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn",
-                    on: {
-                      click: function($event) {
-                        return _vm.deletePost(post)
+                _c("td", { domProps: { textContent: _vm._s(post.title) } }),
+                _vm._v(" "),
+                _c("td", { domProps: { textContent: _vm._s(post.content) } }),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn",
+                      on: {
+                        click: function($event) {
+                          return _vm.loadFieldsUpdate(post)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("Borrar")]
-                )
+                    },
+                    [_vm._v("Modificar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn",
+                      on: {
+                        click: function($event) {
+                          return _vm.deletePost(post)
+                        }
+                      }
+                    },
+                    [_vm._v("Borrar")]
+                  )
+                ])
               ])
-            ])
-          }),
-          0
-        )
+            }),
+            0
+          )
+        ])
       ])
     ])
   ])

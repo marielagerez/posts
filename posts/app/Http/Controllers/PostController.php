@@ -14,11 +14,7 @@ class PostController extends Controller
         return $post;
     }
 
-    public function get(Request $request)
-    {
-        $posts = Post::orderBy('created_at', 'asc')->get();
-        return response()->json($posts);
-    }
+    
     public function show(Request $request)
     {
         $post = Post::findOrFail($request->id);
@@ -31,7 +27,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
 
-        $tapostsk->save();
+        $post->save();
     }
     public function update(Request $request)
     {
